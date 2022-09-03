@@ -1,6 +1,6 @@
-# StudyBuddy_ADProject_Team1
+# FullStack AD Project
 
-FrontEnd(ReactJS,Android) and BackEnd(Java, Python(ML))
+FrontEnd(ReactJS,Android), BackEnd(Java, Python(ML)), DB MySQL, and deployment with Docker compose
 
 ## Deployment
 (Requires docker and docker compose to be installed)

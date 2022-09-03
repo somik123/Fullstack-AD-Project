@@ -1,0 +1,235 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="html_head" id="html_head">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Dashboard</title>
+
+	<!-- plugins:css -->
+	<link rel="stylesheet" th:href="@{/css/feather.css}">
+	<link rel="stylesheet" th:href="@{/css/themify-icons.css}">
+	<link rel="stylesheet" th:href="@{/css/vendor.bundle.base.css}">
+	<link rel="stylesheet" th:href="@{/css/dataTables.bootstrap4.css}">
+	<link rel="stylesheet" th:href="@{/css/select.dataTables.min.css}">
+	<!-- endinject -->
+
+	<!-- inject:css -->
+	<link rel="stylesheet" th:href="@{/css/vertical-layout-light/style.css}" />
+	<!-- endinject -->
+
+	<!-- custom:css -->
+	<link rel="stylesheet" th:href="@{/css/main.css}">
+	<!-- endcustom -->
+
+</head>
+
+<body>
+
+	<!-- Navigation -->
+	<nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row" th:fragment="menu" id="menu">
+		<div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+			<a class="navbar-brand brand-logo mr-5" th:href="@{/}"><img th:src="@{/images/logo.svg}" class="mr-2"
+					alt="logo" /></a>
+			<a class="navbar-brand brand-logo-mini" th:href="@{/}"><img th:src="@{/images/logo-mini.svg}"
+					alt="logo" /></a>
+		</div>
+		<div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+			<button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+				<span class="icon-menu"></span>
+			</button>
+
+			<ul class="navbar-nav navbar-nav-right">
+
+				<li class="nav-item">
+					<span class="menu-title">You are logged in as
+						<span class="badge badge-success">
+							<div sec:authorize="hasAuthority('ADMIN')">Admin</div>
+							<div sec:authorize="hasAuthority('STUDENT')">Student</div>
+							<div sec:authorize="hasAuthority('LECTURER')">Lecturer</div>
+						</span>
+					</span>
+				</li>
+
+				<li class="nav-item nav-profile dropdown">
+					<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+						<div th:if="${session.profileImage != null}">
+							<img th:src="@{${session.profileImage}}" style=" object-fit: cover;" alt="profile" />
+						</div>
+						<div th:if="${session.profileImage == null}">
+							<img th:src="@{/images/unknown.png}" style=" object-fit: cover;" alt="profile" />
+						</div>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+						<div class="dropdown-item">
+							<form th:action="@{/setting}" method="get">
+								<button type="submit" class="btn btn-outline-primary btn-icon-text">
+									<i class="ti-settings btn-icon-prepend"></i>
+									Settings
+								</button>
+							</form>
+						</div>
+						<div class="dropdown-item">
+							<form th:action="@{/logout}" method="post">
+								<button type="submit" class="btn btn-outline-danger btn-icon-text">
+									<i class="ti-power-off btn-icon-prepend"></i>
+									Sign Out
+								</button>
+							</form>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+				data-toggle="offcanvas">
+				<span class="icon-menu"></span>
+			</button>
+		</div>
+	</nav>
+	<ul sec:authorize="isAuthenticated()">
+		<nav class="sidebar sidebar-offcanvas" th:fragment="sidebar" id="sidebar">
+
+			<ul class="nav" sec:authorize="hasAuthority('ADMIN')">
+				<!--<li class="nav-item">
+					<a class="nav-link" th:href="@{/admin/users}">
+						<i class="ti-id-badge menu-icon"></i>
+						<span class="menu-title">Manage All Users</span>
+					</a>
+				</li>-->
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/admin/dashboard}">
+						<i class="icon-grid menu-icon"></i>
+						<span class="menu-title">Dashboard</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/admin/search}">
+						<i class="ti-search menu-icon"></i>
+						<span class="menu-title">Search Users</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/admin/users/Guests}">
+						<i class="ti-id-badge menu-icon"></i>
+						<span class="menu-title">Manage Guests</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/admin/users/Students}">
+						<i class="ti-id-badge menu-icon"></i>
+						<span class="menu-title">Manage Students</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/admin/users/Lecturers}">
+						<i class="ti-user menu-icon"></i>
+						<span class="menu-title">Manage Lecturers</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/admin/users/Admins}">
+						<i class="ti-user menu-icon"></i>
+						<span class="menu-title">Manage Admins</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/admin/courses}">
+						<i class="ti-notepad menu-icon"></i>
+						<span class="menu-title">Manage Courses</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/admin/course-enrollment}">
+						<i class="ti-write menu-icon"></i>
+						<span class="menu-title">Manage Enrolment</span>
+					</a>
+				</li>
+			</ul>
+
+			<ul class="nav" sec:authorize="hasAuthority('STUDENT')">
+
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/student/dashboard}">
+						<i class="icon-grid menu-icon"></i>
+						<span class="menu-title">Dashboard</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/student/GPA}">
+						<i class="ti-cup menu-icon"></i>
+						<span class="menu-title">Grades and GPA</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/student/courses}">
+						<i class="ti-eye menu-icon"></i>
+						<span class="menu-title">View Courses</span>
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/student/enroll-course}">
+						<i class="ti-write menu-icon"></i>
+						<span class="menu-title">Enroll for a Course</span>
+					</a>
+				</li>
+			</ul>
+
+			<ul class="nav" sec:authorize="hasAuthority('LECTURER')">
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/lecturer/dashboard}">
+						<i class="icon-grid menu-icon"></i>
+						<span class="menu-title">Dashboard</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/lecturer/course-taught}">
+						<i class="ti-pencil-alt menu-icon"></i>
+						<span class="menu-title">View Courses Taught</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/lecturer/course-enrollment}">
+						<i class="ti-pencil-alt menu-icon"></i>
+						<span class="menu-title">View Course Enrollment</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/lecturer/student-performance}">
+						<i class="ti-dashboard menu-icon"></i>
+						<span class="menu-title">Student Performance</span>
+					</a>
+				</li>
+			</ul>
+
+		</nav>
+		</div>
+		<!--<div th:fragment="footerContent" id="footerContent">
+		<footer class="footer">
+			<div class="d-sm-flex justify-content-center justify-content-sm-between">
+				<span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2022. All rights
+					reserved.</span>
+				<span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i
+						class="ti-heart text-danger ml-1"></i></span>
+			</div>
+		</footer>
+	</div>-->
+
+		<div th:fragment="footer" id="footer">
+			<!-- inject:js -->
+			<script th:src="@{/js/vendor.bundle.base.js}"></script>
+			<script th:src="@{/js/Chart.min.js}"></script>
+			<script th:src="@{/js/jquery.dataTables.js}"></script>
+			<script th:src="@{/js/dataTables.bootstrap4.js}"></script>
+			<script th:src="@{/js/dataTables.select.min.js}"></script>
+			<script th:src="@{/js/off-canvas.js}"></script>
+			<script th:src="@{/js/hoverable-collapse.js}"></script>
+			<script th:src="@{/js/template.js}"></script>
+			<script th:src="@{/js/dashboard.js}"></script>
+			<script th:src="@{/js/Chart.roundedBarCharts.js}"></script>
+			<!-- endinject -->
+		</div>
+
+
+</body>
+
+</html>

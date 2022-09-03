@@ -1,0 +1,72 @@
+https://en.wikipedia.org/wiki/Recommender_system#Content-based_filtering
+Textbook recommendations: (switching)? 
+TLDR: textbooks should display according to id as specified in the String _bookOrdering of each user. 
+
+"Ordering": The order of which the textbooks are shown to the user when he browses the textbook catalogue of 382 books. 
+	Top recommendations are shown to the user first. 
+
+a) Ordering is done by Python backend. 
+	i) Inputs: User Id, String of all interests, String of _eventLatest(nullable), String of _eventPrev(nullable)
+	ii) Outputs, void. Calls API to store String of bookOrdering
+	
+b)i) General ordering(null _eventLatest and null _eventPrev): Interests picked by the user determine the basic ordering of textbook
+	-2 users who picked the same interests (and has not joined any events) have the same ordering
+	-if there are no interests: 
+		-order is by i)Alphabetical ordering of genre ii)Alphabetical ordering of textbook title
+	-if there are interests: 
+		-display books that fall under this genre 
+			-likewise order is by i)Alphabetical ordering of genre ii)Alphabetical ordering of textbook title
+		-then, display books that do not fall under this genre 
+			-likewise order is by i)Alphabetical ordering of genre ii)Alphabetical ordering of textbook title
+	
+b)ii) Specific recommendations + ordering(_eventLatest and/or _eventPrev has value): 
+	-Use cosine similarity/tdtif to get most similar textbooks(compared with title + description)
+	-Top 5(?) books to be shown first based on cosine similarity 
+	-Reminding books to follow order b) (interests)
+
+
+
+
+Sentiment analysis: python server? fit in java backend? 
+Textbook recommendations: to start
+textbooks genres: 
+	Biological/Physical Sciences
+	    Astronomy
+		Biology
+		Chemistry
+		Physics
+		Science
+	Business
+		Career Success
+		College 
+		Accounting
+		Business
+		Commerce
+		Entrepreneurship
+		Finance
+		Human
+		Management
+		Non-Profits
+	Computer Sciences
+		Algorithms
+		Computer
+		Databases
+		Systems
+		Web
+	Humanities
+		English
+		Gender
+		History
+		Linguistics
+		Philosophy
+		Spanish
+	Math/Stats
+		Algebra
+		Calculus
+		Math
+		Statistics
+	Others
+	
+	
+	
+	

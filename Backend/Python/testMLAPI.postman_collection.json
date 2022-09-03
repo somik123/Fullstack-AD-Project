@@ -1,0 +1,66 @@
+{
+	"info": {
+		"_postman_id": "edfd23c0-765f-4af0-908b-51b1d066f425",
+		"name": "testMLAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8750955"
+	},
+	"item": [
+		{
+			"name": "http://localhost:5000/analyse",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"text\":\"i am having a normal day\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/analyse",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"analyse"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/recommend",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"interest\":\"Math/Stats, Computer Sciences\",\r\n    \"_eventLatest\":\"Title of event A for example\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/recommend",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"recommend"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

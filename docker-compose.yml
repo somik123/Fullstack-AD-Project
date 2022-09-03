@@ -1,0 +1,83 @@
+version: "3"
+
+volumes:
+  database:
+    name: database_java
+  static_files:
+    name: static_files
+
+services:
+
+  db:
+    container_name: mariadb
+    image: mariadb
+    restart: unless-stopped
+    volumes:
+      - database:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 3FnwAvipWGyqsg4ZbJzgvmRMMJEq7Hzs
+      MYSQL_PASSWORD: WdaVDfWK6TSAM3zKwATm
+      MYSQL_DATABASE: studybuddy
+      MYSQL_USER: studybuddy
+      TZ: Asia/Singapore
+
+  db_manager:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Singapore
+    links:
+      - db
+    ports:
+      - 8088:80
+
+  frontend_react:
+    container_name: frontend
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Singapore
+    build:
+      context: ./Frontend_React
+      dockerfile: ./Dockerfile
+      args:
+        environment: dev
+        status: stable
+    ports:
+      - 3000:3000
+  
+  backend_ml:
+    container_name: backend_ml
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Singapore
+    build:
+      context: ./Backend/Python
+      dockerfile: ./Dockerfile
+      args:
+        environment: dev
+        status: stable
+    ports:
+      - 5000:5000
+
+  backend_java:
+    container_name: backend_java
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Singapore
+    build:
+      context: ./Backend/Java
+      dockerfile: ./Dockerfile
+      args:
+        environment: dev
+        status: stable
+    volumes:
+      - static_files:/usr/app/uploads
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    links:
+      - db
+      - backend_ml
+

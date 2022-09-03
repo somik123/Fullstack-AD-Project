@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head" />
+<body>
+
+	<div class="container-fluid page-body-wrapper">
+
+
+		<div class="main-panel">
+			<div class="content-wrapper">
+				<div class="row">
+
+					<div class="col-md-12 grid-margin">
+						<div class="row">
+							<div class="col-12 col-xl-8 mb-4 mb-xl-0">
+								<h3 class="font-weight-bold">Dashboard</h3>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12 grid-margin stretch-card">
+						<div class="col-md-12 grid-margin transparent">
+							<div class="row">
+								<div class="col-md-12 mb-4 stretch-card transparent">
+									<div class="card">
+										<div class="card-body">
+											<div class="card-title">Users</div>
+											<table class="table table-borderless report-table">
+												<tr th:each="i : ${#numbers.sequence(0, users.size-1)}">
+													<td class="font-weight-bold mb-0"><span
+															th:text="${users.get(i).name}"></span></td>
+													<td>
+														<div class="text-muted">
+															<span th:text="${users.get(i).email}"></span> /
+															<span th:text="${users.get(i).username}"></span> /
+															<span th:text="${users.get(i).userRole.name}"></span>
+														</div>
+													</td>
+												</tr>
+											</table>
+										</div>
+										<div class="card-body">
+											<div class="card-title">StudyGroups</div>
+											<table class="table table-borderless report-table">
+												<tr th:each="i : ${#numbers.sequence(0, studyGroups.size-1)}">
+													<td class="font-weight-bold mb-0" ><span
+															th:text="${studyGroups.get(i).name}"></span></td>
+													<td>
+														<div class="text-muted">
+															<span th:text="${studyGroups.get(i).creator.name}"></span> /
+															<span th:text="${studyGroups.get(i).createDate}"></span>
+														</div>
+													</td>
+												</tr>
+											</table>
+										</div>
+
+										<div class="card-body">
+											<div class="card-title">Events</div>
+											<table class="table table-borderless report-table">
+												<tr th:each="i : ${#numbers.sequence(0, events.size-1)}">
+													<td class="font-weight-bold mb-0" ><span
+															th:text="${events.get(i).name}"></span></td>
+													<td>
+														<div class="text-muted">
+															<span th:text="${events.get(i).creator.name}"></span> /
+															<span th:text="${events.get(i).description}"></span>
+														</div>
+													</td>
+												</tr>
+											</table>
+										</div>
+
+										<div class="card-body">
+											<div class="card-title">Books</div>
+											<table class="table table-borderless report-table">
+												<tr th:each="i : ${#numbers.sequence(0, books.size-1)}">
+													<td class="font-weight-bold mb-0" >
+														<span
+															th:text="${books.get(i).getTitle.length>19}?${books.get(i).getTitle.substring(0,20).concat('...')}:${books.get(i).getTitle}"></span>
+													</td>
+													<td>
+														<div class="text-muted">
+															<span th:text="${books.get(i).getAuthor}"></span> /
+															<span th:text="${books.get(i).getGenre}"></span>
+														</div>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div th:replace="fragments/layout.html :: footer" />
+
+</body>
+
+</html>

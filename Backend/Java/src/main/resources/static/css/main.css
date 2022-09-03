@@ -1,0 +1,23 @@
+#courseformtbl{
+	border:none;
+}
+
+#nav {
+	margin: 20px auto;
+	text-align: center;
+}
+
+#nav a {
+	color: #4CAF50;
+	font-size: 20px;
+	margin-top: 22px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+a:hover,
+a:visited,
+a:link,
+a:active {
+	text-decoration: none;
+}

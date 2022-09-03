@@ -12,7 +12,7 @@ As my local ip address is `10.0.0.20` I'll be using this as the example. Replace
 
 To point the React App to correct backend, edit the file: 
 ```
-Frontend(React)/react_frontend_adteam1/src/utils/AppSetting.js
+Frontend_React/src/utils/AppSetting.js
 ```
 
 And change it to:
